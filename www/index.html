@@ -10,6 +10,7 @@
 		<script src="js/jquery.scrolly.min.js"></script>
 		<script src="js/skel.min.js"></script>
 		<script src="js/init.js"></script>
+
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
@@ -17,6 +18,37 @@
 		</noscript>
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
+	
+		<link rel="stylesheet" href="Styles/snackbar.min.css" />
+		<link rel="stylesheet" href="Styles/material.css" />
+		<script src="Scripts/snackbar.min.js"></script>
+		<script src="Scripts/isMobile.min.js"></script>
+		<script>
+			$(function() {
+
+				$('#appLauncher').click(function(e) {
+					
+
+					if (isMobile.phone){
+
+						$.browser.chrome = /chrom(e|ium)/.test(navigator.userAgent.toLowerCase()); 
+
+						if($.browser.chrome){
+							//window.open('/app/');
+
+						}else{
+							e.preventDefault();
+							$.snackbar({content: "This app only run in Chrome."});
+						}
+
+					}else{
+						e.preventDefault();
+						$.snackbar({content: "This App only run in Mobile devices."});
+					}
+				});
+			});
+		</script>
+
 	</head>
 	<body>
 
@@ -27,7 +59,7 @@
 					<p style="text-shadow: 1px 1px #000000;">A website designed to publish a Webapp to manage your EV3 Robot.</p>
 				</header>
 				<footer>
-					<a href="#comingSoon" class="button" style="background-color: rgb(169, 169, 169);">Launch WebApp</a>
+					<a href="/app/" class="button" id="appLauncher" style="background-color: rgb(169, 169, 169);">Launch WebApp</a>
 				</footer>
 			</section>
 			
