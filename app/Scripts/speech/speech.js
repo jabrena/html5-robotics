@@ -167,6 +167,8 @@ if (!('webkitSpeechRecognition' in window)) {
     final_span.innerHTML = linebreak(final_transcript);
     interim_span.innerHTML = linebreak(interim_transcript);
 
+    var command = final_transcript;
+
     //Send to websocket
     if(
       (linebreak(interim_transcript).trim() == "arriba") ||
@@ -181,6 +183,10 @@ if (!('webkitSpeechRecognition' in window)) {
       //console.log("final_spam" + final_span.innerHTML);
       //console.log("interim_span" + interim_span.innerHTML);
       //final_span.innerHTML = "";
+    }else{
+      console.log("ko");
+      //console.log(interim_transcript.trim());
+      console.log(command);
     }
 
     //console.log(linebreak(interim_transcript));
