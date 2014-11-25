@@ -7,6 +7,10 @@ import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.util.Collection;
 
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.port.MotorPort;
+import lejos.robotics.RegulatedMotor;
+
 import org.java_websocket.WebSocket;
 import org.java_websocket.WebSocketImpl;
 import org.java_websocket.framing.Framedata;
@@ -19,8 +23,24 @@ public class HelloWorldWSS extends WebSocketServer {
 		super( new InetSocketAddress( port ) );
 	}
 	
+	private static RegulatedMotor left;// = new EV3LargeRegulatedMotor(MotorPort.A);
+	private static RegulatedMotor right;// = new EV3LargeRegulatedMotor(MotorPort.B);
+	
 	public static void main(String[] args) throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
+		
+		left = new EV3LargeRegulatedMotor(MotorPort.A);
+		right = new EV3LargeRegulatedMotor(MotorPort.B);
+		left.resetTachoCount();
+		right.resetTachoCount();
+		int speed = 900;
+		int acceleration = 90000;
+		
+		left.setSpeed(speed);
+		right.setSpeed(speed);
+
+		left.setAcceleration(acceleration);
+		right.setAcceleration(acceleration);
 		
 		WebSocketImpl.DEBUG = true;
 		int port = 20000;
@@ -60,8 +80,28 @@ public class HelloWorldWSS extends WebSocketServer {
 	@Override
 	public void onMessage( WebSocket conn, String message ) {
 
-		if(message.equals("UP")){
-			//EMPTY
+		if(message.equals("arriba")){
+			System.out.println("arriba");
+			left.rotate(90);
+			right.rotate(90);
+		}
+		
+		if(message.equals("abajo")){
+			System.out.println("abajo");
+			left.rotate(-90);
+			right.rotate(-90);
+		}
+		
+		if(message.equals("izquierda")){
+			System.out.println("izquierda");
+			left.rotate(90);
+			right.rotate(0);
+		}
+		
+		if(message.equals("derecha")){
+			System.out.println("derecha");
+			left.rotate(0);
+			right.rotate(90);
 		}
 		
 		this.sendToAll( message );

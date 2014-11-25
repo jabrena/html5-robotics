@@ -1,5 +1,6 @@
-var langs =
-[['Afrikaans',       ['af-ZA']],
+var langs =[['Español', ['es-ES', 'España']]];
+/*
+['Afrikaans',       ['af-ZA']],
  ['Bahasa Indonesia',['id-ID']],
  ['Bahasa Melayu',   ['ms-MY']],
  ['Català',          ['ca-ES']],
@@ -12,7 +13,10 @@ var langs =
                      ['en-ZA', 'South Africa'],
                      ['en-GB', 'United Kingdom'],
                      ['en-US', 'United States']],
- ['Español',         ['es-AR', 'Argentina'],
+                     
+ ['Español',         
+
+                     ['es-AR', 'Argentina'],
                      ['es-BO', 'Bolivia'],
                      ['es-CL', 'Chile'],
                      ['es-CO', 'Colombia'],
@@ -62,13 +66,14 @@ var langs =
  ['日本語',           ['ja-JP']],
  ['ภาษาไทย',         ['th-TH']],
  ['Lingua latīna',   ['la']]];
+ */
 
 for (var i = 0; i < langs.length; i++) {
   select_language.options[i] = new Option(langs[i][0], i);
 }
-select_language.selectedIndex = 6;
+select_language.selectedIndex = 0;
 updateCountry();
-select_dialect.selectedIndex = 6;
+select_dialect.selectedIndex = 0;
 
 
 showInfo('info_start');
@@ -163,13 +168,22 @@ if (!('webkitSpeechRecognition' in window)) {
     interim_span.innerHTML = linebreak(interim_transcript);
 
     //Send to websocket
-    if(linebreak(interim_transcript).trim() == "okay"){
-      var message = final_span.innerHTML;
+    if(
+      (linebreak(interim_transcript).trim() == "arriba") ||
+      (linebreak(interim_transcript).trim() == "abajo") ||
+      (linebreak(interim_transcript).trim() == "izquierda") ||
+      (linebreak(interim_transcript).trim() == "derecha")
+      ){
+      var message = interim_transcript.trim();
       doSend(message);
-      $('#final_span').val() = "";
+      console.log("WSS message: " + message);
+      //$('#final_span').val() = "";
+      //console.log("final_spam" + final_span.innerHTML);
+      //console.log("interim_span" + interim_span.innerHTML);
+      //final_span.innerHTML = "";
     }
 
-    console.log(linebreak(interim_transcript));
+    //console.log(linebreak(interim_transcript));
   };
 }
 
